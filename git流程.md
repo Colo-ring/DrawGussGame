@@ -18,7 +18,7 @@
 5. git checkout dev 切换至dev分支
 
    - 4、5操作可使用 git checkout -b dev 替换
-   - *（可使用 git checkout -d <分支名> 删除本地分支）*
+   - *（可使用 git branch -d <分支名> 删除本地分支）*
 
 6. ……修改代码……
 
