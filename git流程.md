@@ -15,16 +15,16 @@
 
 4. git branch dev  从master分支新建dev（本地分支名可替换）分支
 
-5. git checkout dev 创建本地分支dev并切换至dev
+5. git checkout dev 切换至dev分支
 
    - 4、5操作可使用 git checkout -b dev 替换
-   - 使用git checkout -d <分支名>删除本地分支
+   - *（可使用 git checkout -d <分支名> 删除本地分支）*
 
 6. ……修改代码……
 
 7. git add change1 changedFile2 ……
 
-8. git commit -m "description"
+8. git commit -m "feature update description"
 
 9. git push orign dev
 
