@@ -9,7 +9,7 @@
 
 1. 本地新建文件夹，cd进入
 
-2. git clone git@gitee.com:colo_ring/one-million.git
+2. git clone git@gitee.com:colo_ring/one-million.git -b dev
 
 3. git branch -v 检查本地分支
 
@@ -26,11 +26,11 @@
 
 8. git commit -m "feature update description"
 
-9. git push orign dev
+9. git push origin dev
 
    若本地分支名不是dev，则使用命令
 
-   git push orign 本地分支名:dev
+   git push origin 本地分支名:dev
 
 ---
 
