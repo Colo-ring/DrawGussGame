@@ -26,11 +26,11 @@
     },
     {
       "name": "num",
-      "value": "倒计时"
+      "value": "60"
     },
     {
       "name": "cannotspeak",
-      "value": "绘图中不能发言"
+      "value": "绘画中，请保持安静！"
     },
     {
       "name": "entry_MainAbility",

@@ -3,7 +3,7 @@
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
     ohos:height="match_parent"
     ohos:width="match_parent"
-    ohos:alignment="center"
+    ohos:alignment="horizontal_center"
     ohos:orientation="vertical">
 
     <Text
@@ -12,25 +12,39 @@
         ohos:layout_alignment="horizontal_center"
         ohos:padding="10vp"
         ohos:text="$string:game_name"
-        ohos:text_size="20vp"
+        ohos:text_size="30fp"
         ohos:top_padding="20vp"
+        ohos:top_margin="150vp"
         />
-    <Button ohos:width="1000px"
-            ohos:height="1000px"
-            ohos:center_in_parent="true"
-            ohos:id="$+id:rule"
-            ohos:text_size="16vp"
-            ohos:text_color="#9b9b9b"
-            ohos:text="$string:rule"
-            ohos:layout_alignment="center"
-        />
-    <Button ohos:width="1000px"
-            ohos:height="1000px"
-            ohos:center_in_parent="true"
-            ohos:id="$+id:start"
-            ohos:text_size="16vp"
-            ohos:text_color="#9b9b9b"
-            ohos:text="$string:start"
-            ohos:layout_alignment="center"
-        />
+    <DirectionalLayout
+        ohos:background_element="$media:backimg"
+        ohos:height="400vp"
+
+        ohos:width="match_parent">
+        <Button ohos:width="match_content"
+                ohos:height="match_content"
+                ohos:center_in_parent="true"
+                ohos:id="$+id:rule"
+                ohos:text_size="25fp"
+                ohos:text_color="white"
+                ohos:text="$string:rule"
+                ohos:layout_alignment="horizontal_center"
+                ohos:top_margin="100vp"
+                ohos:padding="20vp"
+                ohos:background_element="$graphic:background_button"
+            />
+        <Button ohos:width="match_content"
+                ohos:height="match_content"
+                ohos:center_in_parent="true"
+                ohos:id="$+id:start"
+                ohos:text_size="25fp"
+                ohos:text_color="white"
+                ohos:text="$string:start"
+                ohos:top_margin="30vp"
+                ohos:padding="20vp"
+                ohos:background_element="$graphic:background_button"
+                ohos:layout_alignment="horizontal_center"
+            />
+    </DirectionalLayout>
+
 </DirectionalLayout>

@@ -9,54 +9,95 @@
         ohos:height="match_parent"
         ohos:width="match_parent"
         ohos:orientation="horizontal"
+        ohos:alignment="center"
         ohos:weight="1"
-        ohos:background_element="red">
+        ohos:background_element="#FF3DE78A"
+        >
+        <Image
+            ohos:height="40vp"
+            ohos:width="40vp"
+            ohos:scale_mode="zoom_center"
+            ohos:image_src="$media:time"
+            />
         <Text
             ohos:height="match_content"
             ohos:width="match_content"
-            ohos:text="$string:question">
+            ohos:text_size="20fp"
+            ohos:text_color="white"
+            ohos:text="$string:num">
         </Text>
         <Text
             ohos:height="match_content"
             ohos:width="match_content"
-            ohos:text="$string:num">
+            ohos:text_size="20fp"
+            ohos:text_color="white"
+            ohos:left_margin="100vp"
+            ohos:text="$string:question">
         </Text>
     </DirectionalLayout>
     <DependentLayout
         ohos:id="$+id:drawer_area"
         ohos:height="match_parent"
         ohos:width="match_parent"
-        ohos:weight="7"
-        ohos:background_element="yellow">
+        ohos:weight="6">
     </DependentLayout>
-
-    <DirectionalLayout
-        ohos:id="$+id:head_pic"
-        ohos:height="match_parent"
-        ohos:width="match_parent"
-        ohos:orientation="horizontal"
-        ohos:weight="2"
-        ohos:background_element="blue">
+    <TableLayout
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:row_count="2"
+        ohos:column_count="3"
+        ohos:alignment_type="align_edges"
+        ohos:layout_alignment="center"
+        ohos:padding="30vp"
+        ohos:weight="3"
+        >
+        <Image
+            ohos:height="70vp"
+            ohos:width="70vp"
+            ohos:scale_mode="zoom_center"
+            ohos:image_src="$media:girl"/>
 
         <Image
             ohos:height="match_content"
             ohos:width="match_content"
-            ohos:image_src="$media:icon"/>
+            ohos:left_margin="30vp"
+            ohos:image_src="$media:girl1"/>
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:left_margin="30vp"
+            ohos:image_src="$media:boy1"/>
+        <Image
+            ohos:height="70vp"
+            ohos:width="70vp"
+            ohos:scale_mode="zoom_center"
+            ohos:top_margin="15vp"
+            ohos:image_src="$media:girl"/>
 
         <Image
             ohos:height="match_content"
             ohos:width="match_content"
-            ohos:image_src="$media:icon"/>
-    </DirectionalLayout>
+            ohos:left_margin="30vp"
+            ohos:image_src="$media:girl1"/>
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:left_margin="30vp"
+            ohos:image_src="$media:boy1"/>
+    </TableLayout>
+
     <DirectionalLayout
         ohos:id="$+id:answer"
         ohos:height="match_parent"
         ohos:width="match_parent"
         ohos:weight="1"
-        ohos:background_element="green">
+        ohos:alignment="center"
+        ohos:background_element="#FF3DE78A">
         <Text
-            ohos:height="match_parent"
-            ohos:width="match_parent"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text_size="20fp"
+            ohos:text_color="white"
             ohos:text="$string:cannotspeak">
         </Text>
     </DirectionalLayout>
