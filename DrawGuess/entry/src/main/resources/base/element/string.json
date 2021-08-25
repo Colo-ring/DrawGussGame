@@ -1,20 +1,36 @@
 {
   "string": [
     {
-      "name": "entry_MainAbility",
-      "value": "entry_MainAbility"
+      "name": "game_name",
+      "value": "你画我猜"
     },
     {
-      "name": "mainability_description",
-      "value": "Java_Empty Ability"
+      "name": "rule",
+      "value": "游戏规则"
     },
     {
-      "name": "mainability_HelloWorld",
-      "value": "Hello World"
+      "name": "start",
+      "value": "开始游戏"
     },
     {
-      "name": "drawerserviceability_description",
-      "value": "hap sample empty service"
+      "name": "choose_device",
+      "value": "选择设备"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    },
+    {
+      "name": "question",
+      "value": "选词"
+    },
+    {
+      "name": "num",
+      "value": "倒计时"
+    },
+    {
+      "name": "cannotspeak",
+      "value": "绘图中不能发言"
     }
   ]
 }

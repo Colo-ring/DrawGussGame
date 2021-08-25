@@ -28,7 +28,7 @@
 
         <Text
             ohos:height="match_parent"
-            ohos:text="选择设备"
+            ohos:text="$string:choose_device"
             ohos:text_size="18fp"
             ohos:vertical_center="true"
             ohos:width="match_content" />
@@ -38,7 +38,7 @@
             ohos:align_parent_right="true"
             ohos:height="match_parent"
             ohos:id="$+id:cancel"
-            ohos:text="取消"
+            ohos:text="$string:cancel"
             ohos:text_color="blue"
             ohos:vertical_center="true"
             ohos:width="match_content" />
