@@ -48,6 +48,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
     @Override
     public void onStart(Intent intent) {
+        LogUtil.info(TAG, "MainAbilitySlice::onStart");
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_main);
         grantPermission();
@@ -93,7 +94,8 @@ public class MainAbilitySlice extends AbilitySlice {
         Intent intent = new Intent();
         intent.setParam(CommonData.KEY_REMOTE_DEVICEID, deviceId);
         intent.setParam(CommonData.KEY_IS_LOCAL, true);
-        Operation operation = new Intent.OperationBuilder().withBundleName(getBundleName())
+        Operation operation = new Intent.OperationBuilder()
+                .withBundleName(getBundleName())
                 .withAbilityName(CommonData.ABILITY_MAIN)
                 .withAction(CommonData.DRAW_PAGE)
                 .build();
@@ -111,7 +113,7 @@ public class MainAbilitySlice extends AbilitySlice {
         Operation operation = new Intent.OperationBuilder().withDeviceId(deviceId)
                 .withBundleName(getBundleName())
                 .withAbilityName(CommonData.ABILITY_MAIN)
-                .withAction(CommonData.DRAW_PAGE)
+                .withAction(CommonData.GUESS_PAGE)
                 .withFlags(Intent.FLAG_ABILITYSLICE_MULTI_DEVICE)
                 .build();
         intent.setOperation(operation);

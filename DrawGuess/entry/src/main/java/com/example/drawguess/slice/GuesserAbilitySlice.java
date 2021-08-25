@@ -40,8 +40,8 @@ import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_PARENT;
  *
  * @since 2021-01-11
  */
-public class DrawRemSlice extends AbilitySlice {
-    private static final String TAG = CommonData.TAG + DrawRemSlice.class.getSimpleName();
+public class GuesserAbilitySlice extends AbilitySlice {
+    private static final String TAG = CommonData.TAG + GuesserAbilitySlice.class.getSimpleName();
 
     private DependentLayout area;
 
@@ -65,9 +65,9 @@ public class DrawRemSlice extends AbilitySlice {
 
     @Override
     public void onStart(Intent intent) {
-        LogUtil.info(TAG, "DrawRemSlice::onStart");
+        LogUtil.info(TAG, "GuesserAbilitySlice::onStart");
         super.onStart(intent);
-        super.setUIContent(ResourceTable.Layout_drawer_page);
+        super.setUIContent(ResourceTable.Layout_guesser_page);
         initAndConnectDevice(intent);
         initDraw();
         subscribe();
@@ -80,7 +80,7 @@ public class DrawRemSlice extends AbilitySlice {
      */
     private void initAndConnectDevice(Intent intent) {
         // Page initialization
-        context = DrawRemSlice.this;
+        context = GuesserAbilitySlice.this;
         String remoteDeviceId = intent.getStringParam(CommonData.KEY_REMOTE_DEVICEID);
         isLocal = intent.getBooleanParam(CommonData.KEY_IS_LOCAL, false);
 
@@ -96,10 +96,10 @@ public class DrawRemSlice extends AbilitySlice {
         if (!deviceId.isEmpty()) {
             Intent connectPaIntent = new Intent();
             Operation operation = new Intent.OperationBuilder().withDeviceId(deviceId)
-                .withBundleName(getBundleName())
-                .withAbilityName(CommonData.DRAWER_SERVICE_NAME)
-                .withFlags(Intent.FLAG_ABILITYSLICE_MULTI_DEVICE)
-                .build();
+                    .withBundleName(getBundleName())
+                    .withAbilityName(CommonData.DRAWER_SERVICE_NAME)
+                    .withFlags(Intent.FLAG_ABILITYSLICE_MULTI_DEVICE)
+                    .build();
             connectPaIntent.setOperation(operation);
 
             IAbilityConnection conn = new IAbilityConnection() {

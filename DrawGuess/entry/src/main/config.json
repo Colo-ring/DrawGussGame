@@ -34,7 +34,8 @@
               "action.system.home",
               "action.system.drawer",
               "action.system.draw.rem",
-              "action.system.draw.loc"
+              "action.system.draw.loc",
+              "action.system.guess"
             ]
           }
         ],
@@ -47,9 +48,21 @@
         "launchType": "standard"
       },
       {
-        "name": "com.example.drawguess.DrawerServiceAbility",
         "icon": "$media:icon",
-        "description": "DrawerServiceAbility",
+        "name": "com.example.drawguess.GuesserAbility",
+        "description": "GuesserAbility",
+        "type": "page"
+      },
+      {
+        "icon": "$media:icon",
+        "name": "com.example.drawguess.slice.GuesserAbilitySlice",
+        "description": "GuesserAbilitySlice",
+        "type": "service"
+      },
+      {
+        "icon": "$media:icon",
+        "name": "com.example.drawguess.DrawerServiceAbility",
+        "description": "",
         "type": "service"
       }
     ],
