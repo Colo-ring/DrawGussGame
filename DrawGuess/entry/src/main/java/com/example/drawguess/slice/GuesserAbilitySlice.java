@@ -24,8 +24,9 @@ import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.ability.IAbilityConnection;
 import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
-import ohos.agp.components.DependentLayout;
-import ohos.agp.components.Text;
+import ohos.agp.components.*;
+import ohos.agp.utils.LayoutAlignment;
+import ohos.agp.window.dialog.ToastDialog;
 import ohos.app.Context;
 import ohos.bundle.ElementName;
 import ohos.event.commonevent.*;
@@ -62,6 +63,12 @@ public class GuesserAbilitySlice extends AbilitySlice {
     private MyCommonEventSubscriber subscriber;
 
     private boolean isLocal;
+//回答的答案(以下4个为确认答案相关的参数）
+    private TextField answerText;
+
+    private String answer;
+
+    private Button answerBtn;
 
     @Override
     public void onStart(Intent intent) {
@@ -71,6 +78,10 @@ public class GuesserAbilitySlice extends AbilitySlice {
         initAndConnectDevice(intent);
         initDraw();
         subscribe();
+        answerText = (TextField) findComponentById(ResourceTable.Id_answer);
+        answerText.setText("");
+        answerBtn = (Button) findComponentById(ResourceTable.Id_answer_btn);
+        answerBtn.setClickedListener(new ButtonClick());
     }
 
     /**
@@ -272,6 +283,29 @@ public class GuesserAbilitySlice extends AbilitySlice {
             // After receiving the data, draw on the remote canvas
             drawl.setDrawParams(isLastPoints, pointXs, pointYs);
             LogUtil.info(TAG, "onReceiveEvent.....");
+        }
+    }
+
+    private void checkAnswer() {
+        answer = answerText.getText();
+        if (answer.equals(正确答案)) {
+            new ToastDialog(getContext()).setText("回答正确").setAlignment(LayoutAlignment.CENTER).show();
+        } else {
+            new ToastDialog(getContext()).setText("回答错误").setAlignment(LayoutAlignment.CENTER).show();
+        }
+    }
+
+    private class ButtonClick implements Component.ClickedListener {
+        @Override
+        public void onClick(Component component) {
+            int btnId = component.getId();
+            switch (btnId) {
+                case ResourceTable.Id_answer_btn:
+                    checkAnswer();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -44,6 +44,10 @@ import java.util.List;
 public class MainAbilitySlice extends AbilitySlice {
     private static final String TAG = CommonData.TAG + MainAbilitySlice.class.getSimpleName();
 
+    private Button startBtn;
+
+    private Button ruleBtn;
+
     private static final int PERMISSION_CODE = 10000000;
 
     @Override
@@ -52,7 +56,7 @@ public class MainAbilitySlice extends AbilitySlice {
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_main);
         grantPermission();
-        initView();
+        initButton();
     }
 
     void grantPermission() {
@@ -63,11 +67,10 @@ public class MainAbilitySlice extends AbilitySlice {
         }
     }
 
-    private void initView() {
+    private void initButton() {
         findComponentById(ResourceTable.Id_start).setClickedListener(new ButtonClick());
+        findComponentById(ResourceTable.Id_rule).setClickedListener(new ButtonClick());
     }
-
-    private Button startBtn;
 
     private List<DeviceInfo> devices = new ArrayList<>();
 
@@ -120,16 +123,14 @@ public class MainAbilitySlice extends AbilitySlice {
         startAbility(intent);
     }
 
-    /**
-     * ButtonClick
-     *
-     * @since 2021-01-11
-     */
     private class ButtonClick implements Component.ClickedListener {
         @Override
         public void onClick(Component component) {
             int btnId = component.getId();
             switch (btnId) {
+                case ResourceTable.Id_rule:
+                    showRule();
+                    break;
                 case ResourceTable.Id_start:
                     getDevices();
                     break;
@@ -139,4 +140,6 @@ public class MainAbilitySlice extends AbilitySlice {
             }
         }
     }
+//弹窗显示规则
+
 }

@@ -83,7 +83,6 @@ public class DrawRemSlice extends AbilitySlice {
         context = DrawRemSlice.this;
         String remoteDeviceId = intent.getStringParam(CommonData.KEY_REMOTE_DEVICEID);
         isLocal = intent.getBooleanParam(CommonData.KEY_IS_LOCAL, false);
-
         // Connect to remote service
         if (!remoteDeviceId.isEmpty()) {
             connectRemotePa(remoteDeviceId);
