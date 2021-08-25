@@ -1,6 +1,38 @@
 {
   "string": [
     {
+      "name": "game_name",
+      "value": "你画我猜"
+    },
+    {
+      "name": "rule",
+      "value": "游戏规则"
+    },
+    {
+      "name": "start",
+      "value": "开始游戏"
+    },
+    {
+      "name": "choose_device",
+      "value": "选择设备"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    },
+    {
+      "name": "question",
+      "value": "选词"
+    },
+    {
+      "name": "num",
+      "value": "60"
+    },
+    {
+      "name": "cannotspeak",
+      "value": "绘画中，请保持安静！"
+    },
+    {
       "name": "entry_MainAbility",
       "value": "entry_MainAbility"
     },

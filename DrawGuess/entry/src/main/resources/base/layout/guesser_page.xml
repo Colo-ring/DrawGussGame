@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+    <DirectionalLayout
+        ohos:id="$+id:title"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:orientation="horizontal"
+        ohos:weight="1"
+        ohos:background_element="red">
+        <Text
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="$string:question">
+        </Text>
+        <Text
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="$string:num">
+        </Text>
+    </DirectionalLayout>
+    <DependentLayout
+        ohos:id="$+id:drawer_area"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:weight="7"
+        ohos:background_element="#FF5900FF">
+    </DependentLayout>
+
+    <DirectionalLayout
+        ohos:id="$+id:head_pic"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:orientation="horizontal"
+        ohos:weight="2"
+        ohos:background_element="blue">
+
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:image_src="$media:icon"/>
+
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:image_src="$media:icon"/>
+    </DirectionalLayout>
+    <DirectionalLayout
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:weight="1"
+        ohos:background_element="green">
+        <TextField
+            ohos:id="$+id:answer"
+            ohos:height="match_parent"
+            ohos:width="match_parent">
+        </TextField>
+        <Button
+            ohos:id="$+id:answer_btn"
+            ohos:height="match_parent"
+            ohos:width="match_parent"/>
+    </DirectionalLayout>
+
+</DirectionalLayout>
