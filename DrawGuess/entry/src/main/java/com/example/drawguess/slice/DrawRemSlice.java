@@ -67,7 +67,7 @@ public class DrawRemSlice extends AbilitySlice {
     public void onStart(Intent intent) {
         LogUtil.info(TAG, "onStart");
         super.onStart(intent);
-        super.setUIContent(ResourceTable.Layout_math_draw);
+        super.setUIContent(ResourceTable.Layout_drawer_page);
         initAndConnectDevice(intent);
         initDraw();
         subscribe();
@@ -83,10 +83,10 @@ public class DrawRemSlice extends AbilitySlice {
         context = DrawRemSlice.this;
         String remoteDeviceId = intent.getStringParam(CommonData.KEY_REMOTE_DEVICEID);
         isLocal = intent.getBooleanParam(CommonData.KEY_IS_LOCAL, false);
-        if (findComponentById(ResourceTable.Id_text_title) instanceof Text) {
-            Text textTitle = (Text) findComponentById(ResourceTable.Id_text_title);
-            textTitle.setText(isLocal ? "本地端" : "远程端");
-        }
+//        if (findComponentById(ResourceTable.Id_text_title) instanceof Text) {
+//            Text textTitle = (Text) findComponentById(ResourceTable.Id_text_title);
+//            textTitle.setText(isLocal ? "本地端" : "远程端");
+//        }
 
         // Connect to remote service
         if (!remoteDeviceId.isEmpty()) {
@@ -138,8 +138,8 @@ public class DrawRemSlice extends AbilitySlice {
     }
 
     private void initDraw() {
-        if (findComponentById(ResourceTable.Id_bac_area) instanceof DependentLayout) {
-            area = (DependentLayout) findComponentById(ResourceTable.Id_bac_area);
+        if (findComponentById(ResourceTable.Id_drawer_area) instanceof DependentLayout) {
+            area = (DependentLayout) findComponentById(ResourceTable.Id_drawer_area);
         }
         drawl = new DrawPoint(this, isLocal);
         drawl.setWidth(MATCH_PARENT);

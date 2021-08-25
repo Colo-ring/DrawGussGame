@@ -31,6 +31,22 @@
     {
       "name": "cannotspeak",
       "value": "绘图中不能发言"
+    },
+    {
+      "name": "entry_MainAbility",
+      "value": "entry_MainAbility"
+    },
+    {
+      "name": "mainability_description",
+      "value": "Java_Empty Ability"
+    },
+    {
+      "name": "mainability_HelloWorld",
+      "value": "Hello World"
+    },
+    {
+      "name": "drawerserviceability_description",
+      "value": "hap sample empty service"
     }
   ]
 }
