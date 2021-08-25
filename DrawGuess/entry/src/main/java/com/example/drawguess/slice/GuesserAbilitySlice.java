@@ -286,14 +286,14 @@ public class GuesserAbilitySlice extends AbilitySlice {
         }
     }
 
-    private void checkAnswer() {
-        answer = answerText.getText();
-        if (answer.equals(正确答案)) {
-            new ToastDialog(getContext()).setText("回答正确").setAlignment(LayoutAlignment.CENTER).show();
-        } else {
-            new ToastDialog(getContext()).setText("回答错误").setAlignment(LayoutAlignment.CENTER).show();
-        }
-    }
+//    private void checkAnswer() {
+//        answer = answerText.getText();
+//        if (answer.equals(正确答案)) {
+//            new ToastDialog(getContext()).setText("回答正确").setAlignment(LayoutAlignment.CENTER).show();
+//        } else {
+//            new ToastDialog(getContext()).setText("回答错误").setAlignment(LayoutAlignment.CENTER).show();
+//        }
+//    }
 
     private class ButtonClick implements Component.ClickedListener {
         @Override
@@ -301,7 +301,7 @@ public class GuesserAbilitySlice extends AbilitySlice {
             int btnId = component.getId();
             switch (btnId) {
                 case ResourceTable.Id_answer_btn:
-                    checkAnswer();
+                    //checkAnswer();
                     break;
                 default:
                     break;

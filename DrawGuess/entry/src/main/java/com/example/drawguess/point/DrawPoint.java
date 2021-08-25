@@ -93,31 +93,34 @@ DrawPoint extends Component implements Component.DrawTask {
         paint.setStrokeWidth(STROKE_WIDTH);
         addDrawTask(this);
 
-        setTouchEventListener((component, touchEvent) -> {
-            int crtX = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getX();
-            int crtY = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getY();
-            com.example.drawguess.point.MyPoint point = new com.example.drawguess.point.MyPoint(crtX, crtY);
+        if(this.isLocal) {
+            setTouchEventListener((component, touchEvent) -> {
+                int crtX = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getX();
+                int crtY = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getY();
+                com.example.drawguess.point.MyPoint point = new com.example.drawguess.point.MyPoint(crtX, crtY);
 
-            if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_UP) {
-                point.setLastPoint(true);
-                localPoints.add(point);
-                callBack.callBack(localPoints);
-                System.out.println("up:" + crtY);
-            }
+                if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_UP) {
+                    point.setLastPoint(true);
+                    localPoints.add(point);
+                    callBack.callBack(localPoints);
+                    System.out.println("up:" + crtY);
+                }
 
-            if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_DOWN) {
-                localPoints.add(point);
-                System.out.println("down:" + crtY);
-            }
+                if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_DOWN) {
+                    localPoints.add(point);
+                    System.out.println("down:" + crtY);
+                }
 
-            if (touchEvent.getAction() == TouchEvent.POINT_MOVE) {
-                localPoints.add(point);
-                System.out.println("move:" + crtY);
-            }
+                if (touchEvent.getAction() == TouchEvent.POINT_MOVE) {
+                    localPoints.add(point);
+                    System.out.println("move:" + crtY);
+                }
 
-            invalidate();
-            return true;
-        });
+                invalidate();
+                return true;
+            });
+        }
+
     }
 
     @Override
