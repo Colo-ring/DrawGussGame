@@ -27,7 +27,7 @@
         ohos:height="match_parent"
         ohos:width="match_parent"
         ohos:weight="7"
-        ohos:background_element="yellow">
+        ohos:background_element="#FF5900FF">
     </DependentLayout>
 
     <DirectionalLayout
@@ -49,15 +49,19 @@
             ohos:image_src="$media:icon"/>
     </DirectionalLayout>
     <DirectionalLayout
-        ohos:id="$+id:answer"
         ohos:height="match_parent"
         ohos:width="match_parent"
         ohos:weight="1"
         ohos:background_element="green">
         <TextField
+            ohos:id="$+id:answer"
             ohos:height="match_parent"
             ohos:width="match_parent">
         </TextField>
+        <Button
+            ohos:id="$+id:answer_btn"
+            ohos:height="match_parent"
+            ohos:width="match_parent"/>
     </DirectionalLayout>
 
 </DirectionalLayout>

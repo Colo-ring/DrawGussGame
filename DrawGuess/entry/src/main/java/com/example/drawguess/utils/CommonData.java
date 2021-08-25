@@ -49,6 +49,8 @@ public class CommonData {
      */
     public static final String DRAW_PAGE = "action.system.draw.rem";
 
+
+    public static final String GUESS_PAGE= "action.system.guess";
     /**
      * math draw event action flag
      */

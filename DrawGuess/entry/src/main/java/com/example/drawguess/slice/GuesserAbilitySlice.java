@@ -24,8 +24,9 @@ import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.ability.IAbilityConnection;
 import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
-import ohos.agp.components.DependentLayout;
-import ohos.agp.components.Text;
+import ohos.agp.components.*;
+import ohos.agp.utils.LayoutAlignment;
+import ohos.agp.window.dialog.ToastDialog;
 import ohos.app.Context;
 import ohos.bundle.ElementName;
 import ohos.event.commonevent.*;
@@ -40,8 +41,8 @@ import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_PARENT;
  *
  * @since 2021-01-11
  */
-public class DrawRemSlice extends AbilitySlice {
-    private static final String TAG = CommonData.TAG + DrawRemSlice.class.getSimpleName();
+public class GuesserAbilitySlice extends AbilitySlice {
+    private static final String TAG = CommonData.TAG + GuesserAbilitySlice.class.getSimpleName();
 
     private DependentLayout area;
 
@@ -62,15 +63,25 @@ public class DrawRemSlice extends AbilitySlice {
     private MyCommonEventSubscriber subscriber;
 
     private boolean isLocal;
+//回答的答案(以下4个为确认答案相关的参数）
+    private TextField answerText;
+
+    private String answer;
+
+    private Button answerBtn;
 
     @Override
     public void onStart(Intent intent) {
-        LogUtil.info(TAG, "DrawRemSlice::onStart");
+        LogUtil.info(TAG, "GuesserAbilitySlice::onStart");
         super.onStart(intent);
-        super.setUIContent(ResourceTable.Layout_drawer_page);
+        super.setUIContent(ResourceTable.Layout_guesser_page);
         initAndConnectDevice(intent);
         initDraw();
         subscribe();
+        answerText = (TextField) findComponentById(ResourceTable.Id_answer);
+        answerText.setText("");
+        answerBtn = (Button) findComponentById(ResourceTable.Id_answer_btn);
+        answerBtn.setClickedListener(new ButtonClick());
     }
 
     /**
@@ -80,9 +91,10 @@ public class DrawRemSlice extends AbilitySlice {
      */
     private void initAndConnectDevice(Intent intent) {
         // Page initialization
-        context = DrawRemSlice.this;
+        context = GuesserAbilitySlice.this;
         String remoteDeviceId = intent.getStringParam(CommonData.KEY_REMOTE_DEVICEID);
         isLocal = intent.getBooleanParam(CommonData.KEY_IS_LOCAL, false);
+
         // Connect to remote service
         if (!remoteDeviceId.isEmpty()) {
             connectRemotePa(remoteDeviceId);
@@ -95,10 +107,10 @@ public class DrawRemSlice extends AbilitySlice {
         if (!deviceId.isEmpty()) {
             Intent connectPaIntent = new Intent();
             Operation operation = new Intent.OperationBuilder().withDeviceId(deviceId)
-                .withBundleName(getBundleName())
-                .withAbilityName(CommonData.DRAWER_SERVICE_NAME)
-                .withFlags(Intent.FLAG_ABILITYSLICE_MULTI_DEVICE)
-                .build();
+                    .withBundleName(getBundleName())
+                    .withAbilityName(CommonData.DRAWER_SERVICE_NAME)
+                    .withFlags(Intent.FLAG_ABILITYSLICE_MULTI_DEVICE)
+                    .build();
             connectPaIntent.setOperation(operation);
 
             IAbilityConnection conn = new IAbilityConnection() {
@@ -271,6 +283,29 @@ public class DrawRemSlice extends AbilitySlice {
             // After receiving the data, draw on the remote canvas
             drawl.setDrawParams(isLastPoints, pointXs, pointYs);
             LogUtil.info(TAG, "onReceiveEvent.....");
+        }
+    }
+
+//    private void checkAnswer() {
+//        answer = answerText.getText();
+//        if (answer.equals(正确答案)) {
+//            new ToastDialog(getContext()).setText("回答正确").setAlignment(LayoutAlignment.CENTER).show();
+//        } else {
+//            new ToastDialog(getContext()).setText("回答错误").setAlignment(LayoutAlignment.CENTER).show();
+//        }
+//    }
+
+    private class ButtonClick implements Component.ClickedListener {
+        @Override
+        public void onClick(Component component) {
+            int btnId = component.getId();
+            switch (btnId) {
+                case ResourceTable.Id_answer_btn:
+                    //checkAnswer();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
