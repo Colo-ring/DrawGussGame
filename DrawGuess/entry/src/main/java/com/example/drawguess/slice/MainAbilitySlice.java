@@ -52,7 +52,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
     @Override
     public void onStart(Intent intent) {
-        LogUtil.info(TAG, "MainAbilitySlice::onStart");
+        //LogUtil.info(TAG, "MainAbilitySlice::onStart");
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_main);
         grantPermission();
@@ -86,14 +86,13 @@ public class MainAbilitySlice extends AbilitySlice {
     }
 
     private void showDevicesDialog() {
-        new SelectDeviceDialog(this, devices, deviceInfo -> {
-            startLocalFa(deviceInfo.getDeviceId());
-            startRemoteFa(deviceInfo.getDeviceId());
-        }).show();
+        //new SelectDeviceDialog(this, devices, deviceInfo -> {
+            //startLocalFa(deviceInfo.getDeviceId());
+//        }).show();
     }
 
     private void startLocalFa(String deviceId) {
-        LogUtil.info(TAG, "startLocalFa......");
+        //LogUtil.info(TAG, "startLocalFa......");
         Intent intent = new Intent();
         intent.setParam(CommonData.KEY_REMOTE_DEVICEID, deviceId);
         intent.setParam(CommonData.KEY_IS_LOCAL, true);
@@ -107,7 +106,7 @@ public class MainAbilitySlice extends AbilitySlice {
     }
 
     private void startRemoteFa(String deviceId) {
-        LogUtil.info(TAG, "startRemoteFa......");
+        //LogUtil.info(TAG, "startRemoteFa......");
         String localDeviceId =
                 KvManagerFactory.getInstance().createKvManager(new KvManagerConfig(this)).getLocalDeviceInfo().getId();
         Intent intent = new Intent();
@@ -129,13 +128,13 @@ public class MainAbilitySlice extends AbilitySlice {
             int btnId = component.getId();
             switch (btnId) {
                 case ResourceTable.Id_rule:
-                    showRule();
+                    //showRule();
                     break;
                 case ResourceTable.Id_start:
                     getDevices();
                     break;
                 default:
-                    LogUtil.info(TAG, "Click default");
+                    //LogUtil.info(TAG, "Click default");
                     break;
             }
         }
