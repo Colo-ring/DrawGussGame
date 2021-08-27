@@ -51,8 +51,6 @@ DrawPoint extends Component implements Component.DrawTask {
     private List<com.example.drawguess.point.MyPoint> localPoints = new ArrayList<>();
 
     private List<com.example.drawguess.point.MyPoint> remotePoints = new ArrayList<>();
-    private List<com.example.drawguess.point.MyPoint> localTemp = new ArrayList<>();
-
 
     /**
      * DrawPoint
@@ -96,32 +94,32 @@ DrawPoint extends Component implements Component.DrawTask {
         paint.setStrokeWidth(STROKE_WIDTH);
         addDrawTask(this);
 
-//        if(this.isLocal) {
-        setTouchEventListener((component, touchEvent) -> {
-            int crtX = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getX();
-            int crtY = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getY();
-            com.example.drawguess.point.MyPoint point = new com.example.drawguess.point.MyPoint(crtX, crtY);
+        if(this.isLocal) {
+            setTouchEventListener((component, touchEvent) -> {
+                int crtX = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getX();
+                int crtY = (int) touchEvent.getPointerPosition(touchEvent.getIndex()).getY();
+                com.example.drawguess.point.MyPoint point = new com.example.drawguess.point.MyPoint(crtX, crtY);
 
-            if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_UP) {
-                point.setLastPoint(true);
-                localTemp.add(point);
-                callBack.callBack(localTemp);
-                System.out.println("up:" + crtY);
-            }
+                if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_UP) {
+                    point.setLastPoint(true);
+                    localPoints.add(point);
+                    callBack.callBack(localPoints);
+                    System.out.println("up:" + crtY);
+                }
 
-            if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_DOWN) {
-                localTemp.add(point);
-                System.out.println("down:" + crtY);
-            }
+                if (touchEvent.getAction() == TouchEvent.PRIMARY_POINT_DOWN) {
+                    localPoints.add(point);
+                    System.out.println("down:" + crtY);
+                }
 
-            if (touchEvent.getAction() == TouchEvent.POINT_MOVE) {
-                localTemp.add(point);
-                System.out.println("move:" + crtY);
-            }
-            invalidate();
-            return true;
-        });
-        //}
+                if (touchEvent.getAction() == TouchEvent.POINT_MOVE) {
+                    localPoints.add(point);
+                    System.out.println("move:" + crtY);
+                }
+                invalidate();
+                return true;
+            });
+        }
 
     }
 
@@ -140,23 +138,14 @@ DrawPoint extends Component implements Component.DrawTask {
 
             drawPoints(canvas, remotePoints, false);
         }
-        for (MyPoint myPoint : localTemp) {
-            localPoints.add(new MyPoint(myPoint.getPositionX(),myPoint.getPositionY(),myPoint.isLastPoint()));
-        }
         // draw local points
         drawPoints(canvas, localPoints, true);
-        localTemp.clear();
     }
 
     private void drawPoints(Canvas canvas, List<com.example.drawguess.point.MyPoint> points, boolean isStudent) {
         if (points.size() < 1) {
             return;
         }
-//        if (isStudent) {
-//            paint.setColor(isLocal ? Color.BLACK : Color.RED);
-//        } else {
-//            paint.setColor(isLocal ? Color.BLACK : Color.RED);
-//        }
         paint.setColor(PointStyles.COLOR);
         Point first = null;
         Point last = null;

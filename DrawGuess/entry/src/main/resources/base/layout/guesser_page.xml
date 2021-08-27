@@ -10,7 +10,7 @@
         ohos:width="match_parent"
         ohos:orientation="horizontal"
         ohos:alignment="center"
-        ohos:weight="1"
+        ohos:weight="0.8"
         ohos:background_element="#8FC31F">
         <Image
             ohos:height="33vp"
@@ -19,14 +19,26 @@
             ohos:image_src="$media:time"
             />
         <Text
+            ohos:id="$+id:hintid"
             ohos:height="match_content"
             ohos:width="match_content"
             ohos:text_size="20fp"
             ohos:text_color="white"
             ohos:left_margin="4vp"
-            ohos:text="$string:num">
+            ohos:text="  三个字">
         </Text>
+
     </DirectionalLayout>
+    <ProgressBar
+        ohos:id="$+id:progressbar_guesser"
+        ohos:height="7vp"
+        ohos:width="match_parent"
+        ohos:progress_element="#FFF74C"
+        ohos:orientation="horizontal"
+        ohos:max="100"
+        ohos:min="0"
+        ohos:progress="100"/>
+
     <DependentLayout
         ohos:id="$+id:drawer_area"
         ohos:height="match_parent"

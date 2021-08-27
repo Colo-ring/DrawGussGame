@@ -10,7 +10,7 @@
         ohos:width="match_parent"
         ohos:orientation="horizontal"
         ohos:alignment="center"
-        ohos:weight="1"
+        ohos:weight="0.8"
         ohos:background_element="#8FC31F"
         >
         <Image
@@ -20,14 +20,7 @@
             ohos:image_src="$media:time"
             />
         <Text
-            ohos:height="match_content"
-            ohos:width="match_content"
-            ohos:text_size="20fp"
-            ohos:text_color="white"
-            ohos:left_margin="4vp"
-            ohos:text="$string:num">
-        </Text>
-        <Text
+            ohos:id="$+id:selectedword"
             ohos:height="match_content"
             ohos:width="match_content"
             ohos:text_size="20fp"
@@ -36,12 +29,49 @@
             ohos:text="$string:question">
         </Text>
     </DirectionalLayout>
+    <ProgressBar
+        ohos:id="$+id:progressbar_guesser"
+        ohos:height="7vp"
+        ohos:width="match_parent"
+        ohos:progress_element="#FFF74C"
+        ohos:orientation="horizontal"
+        ohos:max="100"
+        ohos:min="0"
+        ohos:progress="100"/>
     <DependentLayout
         ohos:id="$+id:drawer_area"
         ohos:height="match_parent"
         ohos:width="match_parent"
         ohos:weight="6">
     </DependentLayout>
+    <DirectionalLayout
+        ohos:background_element="#eeeeee"
+        ohos:height="1vp"
+        ohos:width="match_parent" />
+    <DirectionalLayout
+        ohos:height="match_content"
+        ohos:width="match_parent"
+        ohos:padding="3vp"
+        ohos:orientation="horizontal">
+        <Image
+            ohos:height="35vp"
+            ohos:width="35vp"
+            ohos:left_margin="20vp"
+            ohos:scale_mode="zoom_center"
+            ohos:image_src="$media:pen"/>
+        <Image
+            ohos:height="35vp"
+            ohos:width="35vp"
+            ohos:left_margin="20vp"
+            ohos:scale_mode="zoom_center"
+            ohos:image_src="$media:color"/>
+        <Image
+            ohos:height="35vp"
+            ohos:width="35vp"
+            ohos:left_margin="20vp"
+            ohos:scale_mode="zoom_center"
+            ohos:image_src="$media:eraser"/>
+    </DirectionalLayout>
     <TableLayout
         ohos:height="match_parent"
         ohos:width="match_content"
@@ -89,7 +119,7 @@
         ohos:id="$+id:answer"
         ohos:height="match_parent"
         ohos:width="match_parent"
-        ohos:weight="1"
+        ohos:weight="0.8"
         ohos:alignment="center"
         ohos:background_element="#8FC31F">
         <Text

@@ -17,6 +17,7 @@ package com.example.drawguess.slice;
 
 import com.example.drawguess.ResourceTable;
 import com.example.drawguess.devices.DevicesListAdapter;
+import com.example.drawguess.model.RealWord;
 import com.example.drawguess.model.WordsAbility;
 import com.example.drawguess.point.DrawPoint;
 import com.example.drawguess.point.MyPoint;
@@ -66,13 +67,14 @@ public class GuesserAbilitySlice extends AbilitySlice {
     private MyCommonEventSubscriber subscriber;
 
     private boolean isLocal;
-//回答的答案(以下4个为确认答案相关的参数）
+
     private TextField answerText;
 
-    private String answer;
+    public String answer;
 
     private Button answerBtn;
-    private CommonDialog commonDialog;
+
+    String realAnswer;
 
     @Override
     public void onStart(Intent intent) {
@@ -81,29 +83,15 @@ public class GuesserAbilitySlice extends AbilitySlice {
         super.setUIContent(ResourceTable.Layout_guesser_page);
         initAndConnectDevice(intent);
         initDraw();
+        initButton();
         subscribe();
-        setHint();
-//        answerText = (TextField) findComponentById(ResourceTable.Id_answer);
-//        answerText.setText("");
-//        answerBtn = (Button) findComponentById(ResourceTable.Id_answer_btn);
-//        answerBtn.setClickedListener(new ButtonClick());
 
-        Component dialogLayout =
-                LayoutScatter.getInstance(context).parse(ResourceTable.Layout_dialog_select_device2, null, false);
-        Text text = (Text) dialogLayout.findComponentById(ResourceTable.Id_tttttt);
-        text.setText("弹窗测试");
-        commonDialog = new CommonDialog(context);
-        commonDialog.setAlignment(LayoutAlignment.CENTER);
-        commonDialog.setSize(840, 900);
-        commonDialog.setAutoClosable(true);
-        commonDialog.setContentCustomComponent(dialogLayout);
-        commonDialog.show();
-        text.setClickedListener(new Component.ClickedListener() {
-            @Override
-            public void onClick(Component component) {
-                commonDialog.hide();
-            }
-        });
+        answerText = (TextField)findComponentById(ResourceTable.Id_answer);
+        //setHint();
+    }
+
+    private void initButton() {
+        findComponentById(ResourceTable.Id_answer_btn).setClickedListener(new GuesserAbilitySlice.ButtonClick());
     }
 
     /**
@@ -201,22 +189,6 @@ public class GuesserAbilitySlice extends AbilitySlice {
         }
     }
 
-    @Override
-    public void onActive() {
-        super.onActive();
-    }
-
-    @Override
-    public void onForeground(Intent intent) {
-        super.onForeground(intent);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unSubscribe();
-    }
-
     private void subscribe() {
         MatchingSkills matchingSkills = new MatchingSkills();
         matchingSkills.addEvent(CommonData.DRAW_EVENT);
@@ -240,8 +212,6 @@ public class GuesserAbilitySlice extends AbilitySlice {
 
     /**
      * Establish a remote connection
-     *
-     * @since 2021-01-11
      */
     class MathRemoteProxy implements IRemoteBroker {
         private static final int ERR_OK = 0;
@@ -288,8 +258,6 @@ public class GuesserAbilitySlice extends AbilitySlice {
 
     /**
      * MyCommonEventSubscriber
-     *
-     * @since 2021-01-11
      */
     class MyCommonEventSubscriber extends CommonEventSubscriber {
         MyCommonEventSubscriber(CommonEventSubscribeInfo info) {
@@ -308,22 +276,26 @@ public class GuesserAbilitySlice extends AbilitySlice {
         }
     }
 
-//    private void checkAnswer() {
-//        answer = answerText.getText();
-//        if (answer.equals(正确答案)) {
-//            new ToastDialog(getContext()).setText("回答正确").setAlignment(LayoutAlignment.CENTER).show();
-//        } else {
-//            new ToastDialog(getContext()).setText("回答错误").setAlignment(LayoutAlignment.CENTER).show();
-//        }
-//    }
+    private void checkAnswer() {
+        realAnswer = RealWord.getSingleton().getChoosedWord();
+        answer = answerText.getText();
+        System.out.println("answer =======================================" + answer);
+        System.out.println("WordsAbility.CHOOSEDWORD =======================================" + realAnswer);
+        if (answer.isEmpty()) {
+            new ToastDialog(getContext()).setText("输入为空").setAlignment(LayoutAlignment.CENTER).show();
+        }
+        else if (answer.equals(realAnswer)) {
+            new ToastDialog(getContext()).setText("回答正确").setAlignment(LayoutAlignment.CENTER).show();
+        } else {
+            new ToastDialog(getContext()).setText("回答错误").setAlignment(LayoutAlignment.CENTER).show();
+        }
+    }
+
 
     private void setHint() {
-//        LogUtil.info(TAG, "=========================================setHint");
-//        Text text = (Text) findComponentById(ResourceTable.Id_ttt);
-//        WordsAbility words = new WordsAbility(this);
-//        String name = words.getFirstWord();
-//        System.out.println("first word ==========================================" + name);
-//        text.setText(name);
+
+        Text text = (Text) findComponentById(ResourceTable.Id_hintid);
+        text.setText(WordsAbility.CHOOSEDHINT);
     }
 
     private class ButtonClick implements Component.ClickedListener {
@@ -332,11 +304,28 @@ public class GuesserAbilitySlice extends AbilitySlice {
             int btnId = component.getId();
             switch (btnId) {
                 case ResourceTable.Id_answer_btn:
-                    //checkAnswer();
+                    checkAnswer();
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    @Override
+    public void onActive() {
+        super.onActive();
+        setHint();
+    }
+
+    @Override
+    public void onForeground(Intent intent) {
+        super.onForeground(intent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unSubscribe();
     }
 }

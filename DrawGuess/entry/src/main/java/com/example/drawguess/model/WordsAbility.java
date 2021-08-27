@@ -20,19 +20,19 @@ public class WordsAbility extends Ability {
     private static final String TAG = CommonData.TAG + WordsAbility.class.getSimpleName();
     private ArrayList<sqliteData> result = new ArrayList<sqliteData>();
 
+    public static String CHOOSEDWORD;
+    public static String CHOOSEDHINT;
+
     private readSqliteFile readsqlite;
     private AbilityContext context;
     private sqliteData sqldata;
 
     public WordsAbility(AbilityContext context) {
         this.context = context;
-        System.out.println("WordsAbility 构造函数======================================================");
-        System.out.println("WordsAbility context ======================================================" + context.toString());
         getRadomWord();
     }
 
     private void getRadomWord(){
-        System.out.println("getRadomWord 正确调用======================================================");
         readsqlite = new readSqliteFile(context);
         try{
             readsqlite.init();

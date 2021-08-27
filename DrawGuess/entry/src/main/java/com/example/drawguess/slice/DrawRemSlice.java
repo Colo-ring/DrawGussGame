@@ -16,6 +16,8 @@
 package com.example.drawguess.slice;
 
 import com.example.drawguess.ResourceTable;
+import com.example.drawguess.model.RealWord;
+import com.example.drawguess.model.WordsAbility;
 import com.example.drawguess.point.DrawPoint;
 import com.example.drawguess.point.MyPoint;
 import com.example.drawguess.point.PointStyles;
@@ -33,6 +35,7 @@ import ohos.agp.components.Text;
 import ohos.agp.colors.RgbColor;
 import ohos.agp.components.*;
 import ohos.agp.components.element.ShapeElement;
+import ohos.agp.utils.LayoutAlignment;
 import ohos.agp.utils.TextAlignment;
 import ohos.agp.window.dialog.CommonDialog;
 
@@ -41,6 +44,7 @@ import ohos.bundle.ElementName;
 import ohos.event.commonevent.*;
 import ohos.rpc.*;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_PARENT;
@@ -82,20 +86,32 @@ public class DrawRemSlice extends AbilitySlice {
     private MyCommonEventSubscriber subscriber;
 
     private boolean isLocal;
+    private String buttonText1;
+    private String buttonText2;
+    private String buttonText3;
+    private String buttonText4;
 
-    private PointStyles pointStyle = new PointStyles();
+    private String hintText1;
+    private String hintText2;
+    private String hintText3;
+    private String hintText4;
 
+    private CommonDialog commonDialog;
+    WordsAbility words;
+
+    RealWord realWord;
     @Override
     public void onStart(Intent intent) {
         LogUtil.info(TAG, "DrawRemSlice::onStart");
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_drawer_page);
         initAndConnectDevice(intent);
+        words = new WordsAbility(this);
+        realWord = RealWord.getSingleton();
+        initButton();
         chooseWordDialog();
         initDraw();
-
         subscribe();
-        initButton();
     }
 
     /**
@@ -114,62 +130,6 @@ public class DrawRemSlice extends AbilitySlice {
         } else {
             LogUtil.info(TAG, "localDeviceId is null");
         }
-    }
-
-    private void initButton() {
-        //findComponentById(ResourceTable.Id_tttt).setClickedListener(new DrawRemSlice.ButtonClick());
-    }
-    //选词弹框
-    private void chooseWordDialog(){
-        LogUtil.info(TAG, "进入选词");
-        CommonDialog commonDialog = new CommonDialog(this);
-        //水平布局
-        TableLayout tableLayout=new TableLayout(getContext());
-        //DirectionalLayout directionalLayout = new DirectionalLayout(getContext());
-        commonDialog.setCornerRadius(DIALOG_BOX_CORNER_RADIUS);
-        commonDialog.setAlignment(TextAlignment.CENTER);
-        commonDialog.setSize(DIALOG_BOX_WIDTH, DIALOG_BOX_HEIGHT);
-        // 设置布局大小
-        tableLayout.setWidth(ComponentContainer.LayoutConfig.MATCH_PARENT);
-        tableLayout.setHeight(ComponentContainer.LayoutConfig.MATCH_PARENT);
-        tableLayout.setOrientation(Component.HORIZONTAL);
-        tableLayout.setPadding(30, 30, 30, 30);
-        tableLayout.setRowCount(2);
-        tableLayout.setColumnCount(2);
-        tableLayout.setAlignmentType(TableLayout.ALIGN_EDGES);
-
-        //创建四个button
-        Button button1 = new Button(getContext());
-        Button button2 = new Button(getContext());
-        Button button3 = new Button(getContext());
-        Button button4 = new Button(getContext());
-        button1.setId(1);
-        button2.setId(2);
-        button3.setId(3);
-        button4.setId(4);
-        Button button[]={button1,button2,button3,button4};
-        ShapeElement background = new ShapeElement();
-        background.setRgbColor(new RgbColor(143,195,31));
-        background.setCornerRadius(25);
-
-
-        button1.setText("按钮1");
-        button2.setText("按钮2");
-        button3.setText("按钮3");
-        button4.setText("按钮4");
-        for(int i=0;i<4;i++){
-            button[i].setWidth(BUTTON_WIDTH);
-            button[i].setHeight(BUTTON_HEIGHT);
-            button[i].setPadding(10,10,10,10);
-            button[i].setBackground(background);
-            button[i].setTextSize(50);
-            tableLayout.addComponent(button[i]);
-        }
-
-//        button2.setMarginLeft(30);
-//        button3.setMarginTop(30);
-        commonDialog.setContentCustomComponent(tableLayout);
-        commonDialog.show();
     }
 
     private void connectRemotePa(String deviceId) {
@@ -285,10 +245,60 @@ public class DrawRemSlice extends AbilitySlice {
         }
     }
 
+    private void initButton() {
+//        //findComponentById(ResourceTable.Id_tttt).setClickedListener(new DrawRemSlice.ButtonClick());
+        buttonText1 = words.getFirstWord();
+        buttonText2 = words.getSecendWord();
+        buttonText3 = words.getThirdWord();
+        buttonText4 = words.getForthWord();
+
+        hintText1 = words.getFirstHint();
+        hintText2 = words.getSecendHint();
+        hintText3 = words.getThirdHint();
+        hintText4 = words.getForthHint();
+    }
+
+    //选词弹框
+    private void chooseWordDialog(){
+        LogUtil.info(TAG, "进入选词");
+        Component dialogLayout =
+                LayoutScatter.getInstance(this).parse(ResourceTable.Layout_dialog_select_words, null, false);
+        Button button1 = (Button) dialogLayout.findComponentById(ResourceTable.Id_button1);
+        Button button2 = (Button) dialogLayout.findComponentById(ResourceTable.Id_button2);
+        Button button3 = (Button) dialogLayout.findComponentById(ResourceTable.Id_button3);
+        Button button4 = (Button) dialogLayout.findComponentById(ResourceTable.Id_button4);
+        Text cancel = (Text) dialogLayout.findComponentById(ResourceTable.Id_cancel);
+
+        button1.setText(buttonText1);
+        button2.setText(buttonText2);
+        button3.setText(buttonText3);
+        button4.setText(buttonText4);
+
+        button1.setClickedListener(new DrawRemSlice.ButtonClick());
+        button2.setClickedListener(new DrawRemSlice.ButtonClick());
+        button3.setClickedListener(new DrawRemSlice.ButtonClick());
+        button4.setClickedListener(new DrawRemSlice.ButtonClick());
+        cancel.setClickedListener(new DrawRemSlice.ButtonClick());
+
+        commonDialog = new CommonDialog(context);
+        commonDialog.setAlignment(LayoutAlignment.CENTER);
+        commonDialog.setSize(840, 900);
+        commonDialog.setAutoClosable(true);
+        commonDialog.setContentCustomComponent(dialogLayout);
+        commonDialog.show();
+    }
+
+    private void setSelectedWord() {
+        Text text = (Text) findComponentById(ResourceTable.Id_selectedword);
+        text.setText(RealWord.getSingleton().getChoosedWord());
+    }
+
+    public void setHint() {
+        Text text = (Text) findComponentById(ResourceTable.Id_selectedword);
+        text.setText(WordsAbility.CHOOSEDWORD);
+    }
     /**
      * Establish a remote connection
-     *
-     * @since 2021-01-11
      */
     class MathRemoteProxy implements IRemoteBroker {
         private static final int ERR_OK = 0;
@@ -335,8 +345,6 @@ public class DrawRemSlice extends AbilitySlice {
 
     /**
      * MyCommonEventSubscriber
-     *
-     * @since 2021-01-11
      */
     class MyCommonEventSubscriber extends CommonEventSubscriber {
         MyCommonEventSubscriber(CommonEventSubscribeInfo info) {
@@ -360,10 +368,40 @@ public class DrawRemSlice extends AbilitySlice {
         public void onClick(Component component) {
             int btnId = component.getId();
             switch (btnId) {
-//                case ResourceTable.Id_tttt:
-//                    pointStyle.setRed();
-//                    break;
-                case ResourceTable.Id_start:
+                case ResourceTable.Id_cancel:
+                    commonDialog.hide();
+                    break;
+                case ResourceTable.Id_button1:
+//                    WordsAbility.CHOOSEDWORD = buttonText1;
+//                    WordsAbility.CHOOSEDHINT = hintText1;
+                    realWord.setChoosedWord(buttonText1);
+                    realWord.setChoosedHint(hintText1);
+                    setSelectedWord();
+                    commonDialog.hide();
+                    break;
+                case ResourceTable.Id_button2:
+//                    WordsAbility.CHOOSEDWORD = buttonText2;
+//                    WordsAbility.CHOOSEDHINT = hintText2;
+                    realWord.setChoosedWord(buttonText2);
+                    realWord.setChoosedHint(hintText2);
+                    setSelectedWord();
+                    commonDialog.hide();
+                    break;
+                case ResourceTable.Id_button3:
+//                    WordsAbility.CHOOSEDWORD = buttonText3;
+//                    WordsAbility.CHOOSEDHINT = hintText3;
+                    realWord.setChoosedWord(buttonText3);
+                    realWord.setChoosedHint(hintText3);
+                    setSelectedWord();
+                    commonDialog.hide();
+                    break;
+                case ResourceTable.Id_button4:
+//                    WordsAbility.CHOOSEDWORD = buttonText4;
+//                    WordsAbility.CHOOSEDHINT = hintText4;
+                    realWord.setChoosedWord(buttonText4);
+                    realWord.setChoosedHint(hintText4);
+                    setSelectedWord();
+                    commonDialog.hide();
                     break;
                 default:
                     LogUtil.info(TAG, "Click default");
