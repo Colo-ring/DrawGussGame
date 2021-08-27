@@ -3,14 +3,23 @@ package com.example.drawguess;
 import ohos.aafwk.ability.Ability;
 import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
+import ohos.agp.components.Component;
+import ohos.agp.components.ComponentContainer;
+import ohos.agp.components.DirectionalLayout;
+import ohos.agp.utils.TextAlignment;
+import ohos.agp.window.dialog.CommonDialog;
 import ohos.event.commonevent.CommonEventData;
 import ohos.event.commonevent.CommonEventManager;
 import ohos.rpc.*;
 import com.example.drawguess.utils.CommonData;
 import com.example.drawguess.utils.LogUtil;
 
+import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_CONTENT;
+
 public class DrawerServiceAbility extends Ability {
     private static final String TAG = CommonData.TAG + DrawerServiceAbility.class.getSimpleName();
+
+    private static final int PERMISSION_CODE = 10000000;
 
     private DrawerRemote remote = new DrawerRemote();
 
@@ -18,6 +27,7 @@ public class DrawerServiceAbility extends Ability {
     public void onStart(Intent intent) {
         LogUtil.info(TAG, "RemoteServiceAbility::onStart");
         super.onStart(intent);
+
     }
 
     @Override
@@ -80,4 +90,6 @@ public class DrawerServiceAbility extends Ability {
             return true;
         }
     }
+
+
 }

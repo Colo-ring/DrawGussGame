@@ -16,7 +16,7 @@
         ohos:text_alignment="center"
         ohos:text_color="white"
         ohos:background_element="$media:title"
-        ohos:top_margin="100vp"
+        ohos:top_margin="30vp"
         />
     <Image
         ohos:height="380vp"
