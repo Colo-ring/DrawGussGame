@@ -76,6 +76,8 @@ public class GuesserAbilitySlice extends AbilitySlice {
 
     String realAnswer;
 
+    RealWord realWord;
+
     @Override
     public void onStart(Intent intent) {
         LogUtil.info(TAG, "GuesserAbilitySlice::onStart");
@@ -85,7 +87,7 @@ public class GuesserAbilitySlice extends AbilitySlice {
         initDraw();
         initButton();
         subscribe();
-
+        realWord = RealWord.getSingleton();
         answerText = (TextField)findComponentById(ResourceTable.Id_answer);
         //setHint();
     }
@@ -293,9 +295,8 @@ public class GuesserAbilitySlice extends AbilitySlice {
 
 
     private void setHint() {
-
         Text text = (Text) findComponentById(ResourceTable.Id_hintid);
-        text.setText(WordsAbility.CHOOSEDHINT);
+        text.setText(realWord.getChoosedHint());
     }
 
     private class ButtonClick implements Component.ClickedListener {
