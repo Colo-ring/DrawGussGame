@@ -29,6 +29,13 @@ import ohos.agp.components.Button;
 import ohos.agp.components.Component;
 import ohos.agp.components.DependentLayout;
 import ohos.agp.components.Text;
+
+import ohos.agp.colors.RgbColor;
+import ohos.agp.components.*;
+import ohos.agp.components.element.ShapeElement;
+import ohos.agp.utils.TextAlignment;
+import ohos.agp.window.dialog.CommonDialog;
+
 import ohos.app.Context;
 import ohos.bundle.ElementName;
 import ohos.event.commonevent.*;
@@ -45,6 +52,16 @@ import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_PARENT;
  */
 public class DrawRemSlice extends AbilitySlice {
     private static final String TAG = CommonData.TAG + DrawRemSlice.class.getSimpleName();
+
+    public static final float DIALOG_BOX_CORNER_RADIUS = 36.0f;
+
+    public static final int DIALOG_BOX_WIDTH = 960;
+
+    public static final int DIALOG_BOX_HEIGHT = 900;
+
+    public static final int BUTTON_WIDTH=300;
+
+    public static final int BUTTON_HEIGHT=100;
 
     private DependentLayout area;
 
@@ -74,7 +91,9 @@ public class DrawRemSlice extends AbilitySlice {
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_drawer_page);
         initAndConnectDevice(intent);
+        chooseWordDialog();
         initDraw();
+
         subscribe();
         initButton();
     }
@@ -99,6 +118,58 @@ public class DrawRemSlice extends AbilitySlice {
 
     private void initButton() {
         findComponentById(ResourceTable.Id_tttt).setClickedListener(new DrawRemSlice.ButtonClick());
+    }
+    //选词弹框
+    private void chooseWordDialog(){
+        LogUtil.info(TAG, "进入选词");
+        CommonDialog commonDialog = new CommonDialog(this);
+        //水平布局
+        TableLayout tableLayout=new TableLayout(getContext());
+        //DirectionalLayout directionalLayout = new DirectionalLayout(getContext());
+        commonDialog.setCornerRadius(DIALOG_BOX_CORNER_RADIUS);
+        commonDialog.setAlignment(TextAlignment.CENTER);
+        commonDialog.setSize(DIALOG_BOX_WIDTH, DIALOG_BOX_HEIGHT);
+        // 设置布局大小
+        tableLayout.setWidth(ComponentContainer.LayoutConfig.MATCH_PARENT);
+        tableLayout.setHeight(ComponentContainer.LayoutConfig.MATCH_PARENT);
+        tableLayout.setOrientation(Component.HORIZONTAL);
+        tableLayout.setPadding(30, 30, 30, 30);
+        tableLayout.setRowCount(2);
+        tableLayout.setColumnCount(2);
+        tableLayout.setAlignmentType(TableLayout.ALIGN_EDGES);
+
+        //创建四个button
+        Button button1 = new Button(getContext());
+        Button button2 = new Button(getContext());
+        Button button3 = new Button(getContext());
+        Button button4 = new Button(getContext());
+        button1.setId(1);
+        button2.setId(2);
+        button3.setId(3);
+        button4.setId(4);
+        Button button[]={button1,button2,button3,button4};
+        ShapeElement background = new ShapeElement();
+        background.setRgbColor(new RgbColor(143,195,31));
+        background.setCornerRadius(25);
+
+
+        button1.setText("按钮1");
+        button2.setText("按钮2");
+        button3.setText("按钮3");
+        button4.setText("按钮4");
+        for(int i=0;i<4;i++){
+            button[i].setWidth(BUTTON_WIDTH);
+            button[i].setHeight(BUTTON_HEIGHT);
+            button[i].setPadding(10,10,10,10);
+            button[i].setBackground(background);
+            button[i].setTextSize(50);
+            tableLayout.addComponent(button[i]);
+        }
+
+//        button2.setMarginLeft(30);
+//        button3.setMarginTop(30);
+        commonDialog.setContentCustomComponent(tableLayout);
+        commonDialog.show();
     }
 
     private void connectRemotePa(String deviceId) {
