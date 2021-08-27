@@ -18,12 +18,15 @@ package com.example.drawguess.slice;
 import com.example.drawguess.ResourceTable;
 import com.example.drawguess.point.DrawPoint;
 import com.example.drawguess.point.MyPoint;
+import com.example.drawguess.point.PointStyles;
 import com.example.drawguess.utils.CommonData;
 import com.example.drawguess.utils.LogUtil;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.ability.IAbilityConnection;
 import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
+import ohos.agp.components.Button;
+import ohos.agp.components.Component;
 import ohos.agp.components.DependentLayout;
 import ohos.agp.components.Text;
 import ohos.app.Context;
@@ -63,6 +66,8 @@ public class DrawRemSlice extends AbilitySlice {
 
     private boolean isLocal;
 
+    private PointStyles pointStyle = new PointStyles();
+
     @Override
     public void onStart(Intent intent) {
         LogUtil.info(TAG, "DrawRemSlice::onStart");
@@ -71,6 +76,7 @@ public class DrawRemSlice extends AbilitySlice {
         initAndConnectDevice(intent);
         initDraw();
         subscribe();
+        initButton();
     }
 
     /**
@@ -89,6 +95,10 @@ public class DrawRemSlice extends AbilitySlice {
         } else {
             LogUtil.info(TAG, "localDeviceId is null");
         }
+    }
+
+    private void initButton() {
+        findComponentById(ResourceTable.Id_tttt).setClickedListener(new DrawRemSlice.ButtonClick());
     }
 
     private void connectRemotePa(String deviceId) {
@@ -271,6 +281,23 @@ public class DrawRemSlice extends AbilitySlice {
             // After receiving the data, draw on the remote canvas
             drawl.setDrawParams(isLastPoints, pointXs, pointYs);
             LogUtil.info(TAG, "onReceiveEvent.....");
+        }
+    }
+
+    private class ButtonClick implements Component.ClickedListener {
+        @Override
+        public void onClick(Component component) {
+            int btnId = component.getId();
+            switch (btnId) {
+                case ResourceTable.Id_tttt:
+                    pointStyle.setRed();
+                    break;
+                case ResourceTable.Id_start:
+                    break;
+                default:
+                    LogUtil.info(TAG, "Click default");
+                    break;
+            }
         }
     }
 }

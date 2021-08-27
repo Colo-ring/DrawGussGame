@@ -47,6 +47,14 @@
     {
       "name": "drawerserviceability_description",
       "value": "hap sample empty service"
+    },
+    {
+      "name": "worddataability_description",
+      "value": "hap sample empty provider"
+    },
+    {
+      "name": "wordsability_description",
+      "value": "hap sample empty service"
     }
   ]
 }

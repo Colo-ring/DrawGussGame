@@ -19,6 +19,8 @@ import static ohos.security.SystemPermission.DISTRIBUTED_DATASYNC;
 
 import com.example.drawguess.ResourceTable;
 import com.example.drawguess.devices.SelectDeviceDialog;
+import com.example.drawguess.model.readSqliteFile;
+import com.example.drawguess.model.sqliteData;
 import com.example.drawguess.utils.CommonData;
 import com.example.drawguess.utils.LogUtil;
 
@@ -27,12 +29,14 @@ import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
 import ohos.agp.components.Button;
 import ohos.agp.components.Component;
+import ohos.agp.components.Text;
 import ohos.bundle.IBundleManager;
 import ohos.data.distributed.common.KvManagerConfig;
 import ohos.data.distributed.common.KvManagerFactory;
 import ohos.distributedschedule.interwork.DeviceInfo;
 import ohos.distributedschedule.interwork.DeviceManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,7 +133,7 @@ public class MainAbilitySlice extends AbilitySlice {
             int btnId = component.getId();
             switch (btnId) {
                 case ResourceTable.Id_rule:
-                    showRule();
+                    //showRule();
                     break;
                 case ResourceTable.Id_start:
                     getDevices();

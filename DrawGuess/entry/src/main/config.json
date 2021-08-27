@@ -64,6 +64,12 @@
         "name": "com.example.drawguess.DrawerServiceAbility",
         "description": "",
         "type": "service"
+      },
+      {
+        "name": "com.example.drawguess.model.WordsAbility",
+        "icon": "$media:icon",
+        "description": "$string:wordsability_description",
+        "type": "service"
       }
     ],
     "reqPermissions": [

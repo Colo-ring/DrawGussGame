@@ -16,6 +16,7 @@
 package com.example.drawguess.slice;
 
 import com.example.drawguess.ResourceTable;
+import com.example.drawguess.model.WordsAbility;
 import com.example.drawguess.point.DrawPoint;
 import com.example.drawguess.point.MyPoint;
 import com.example.drawguess.utils.CommonData;
@@ -78,10 +79,11 @@ public class GuesserAbilitySlice extends AbilitySlice {
         initAndConnectDevice(intent);
         initDraw();
         subscribe();
-        answerText = (TextField) findComponentById(ResourceTable.Id_answer);
-        answerText.setText("");
-        answerBtn = (Button) findComponentById(ResourceTable.Id_answer_btn);
-        answerBtn.setClickedListener(new ButtonClick());
+        setHint();
+//        answerText = (TextField) findComponentById(ResourceTable.Id_answer);
+//        answerText.setText("");
+//        answerBtn = (Button) findComponentById(ResourceTable.Id_answer_btn);
+//        answerBtn.setClickedListener(new ButtonClick());
     }
 
     /**
@@ -294,6 +296,15 @@ public class GuesserAbilitySlice extends AbilitySlice {
 //            new ToastDialog(getContext()).setText("回答错误").setAlignment(LayoutAlignment.CENTER).show();
 //        }
 //    }
+
+    private void setHint() {
+        LogUtil.info(TAG, "=========================================setHint");
+        Text text = (Text) findComponentById(ResourceTable.Id_ttt);
+        WordsAbility words = new WordsAbility(this);
+        String name = words.getFirstWord();
+        System.out.println("first word ==========================================" + name);
+        text.setText(name);
+    }
 
     private class ButtonClick implements Component.ClickedListener {
         @Override
