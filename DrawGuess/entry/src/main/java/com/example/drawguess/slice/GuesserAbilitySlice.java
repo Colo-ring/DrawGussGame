@@ -16,6 +16,7 @@
 package com.example.drawguess.slice;
 
 import com.example.drawguess.ResourceTable;
+import com.example.drawguess.devices.DevicesListAdapter;
 import com.example.drawguess.model.WordsAbility;
 import com.example.drawguess.point.DrawPoint;
 import com.example.drawguess.point.MyPoint;
@@ -27,6 +28,7 @@ import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
 import ohos.agp.components.*;
 import ohos.agp.utils.LayoutAlignment;
+import ohos.agp.window.dialog.CommonDialog;
 import ohos.agp.window.dialog.ToastDialog;
 import ohos.app.Context;
 import ohos.bundle.ElementName;
@@ -70,6 +72,7 @@ public class GuesserAbilitySlice extends AbilitySlice {
     private String answer;
 
     private Button answerBtn;
+    private CommonDialog commonDialog;
 
     @Override
     public void onStart(Intent intent) {
@@ -84,6 +87,23 @@ public class GuesserAbilitySlice extends AbilitySlice {
 //        answerText.setText("");
 //        answerBtn = (Button) findComponentById(ResourceTable.Id_answer_btn);
 //        answerBtn.setClickedListener(new ButtonClick());
+
+        Component dialogLayout =
+                LayoutScatter.getInstance(context).parse(ResourceTable.Layout_dialog_select_device2, null, false);
+        Text text = (Text) dialogLayout.findComponentById(ResourceTable.Id_tttttt);
+        text.setText("弹窗测试");
+        commonDialog = new CommonDialog(context);
+        commonDialog.setAlignment(LayoutAlignment.CENTER);
+        commonDialog.setSize(840, 900);
+        commonDialog.setAutoClosable(true);
+        commonDialog.setContentCustomComponent(dialogLayout);
+        commonDialog.show();
+        text.setClickedListener(new Component.ClickedListener() {
+            @Override
+            public void onClick(Component component) {
+                commonDialog.hide();
+            }
+        });
     }
 
     /**
@@ -298,12 +318,12 @@ public class GuesserAbilitySlice extends AbilitySlice {
 //    }
 
     private void setHint() {
-        LogUtil.info(TAG, "=========================================setHint");
-        Text text = (Text) findComponentById(ResourceTable.Id_ttt);
-        WordsAbility words = new WordsAbility(this);
-        String name = words.getFirstWord();
-        System.out.println("first word ==========================================" + name);
-        text.setText(name);
+//        LogUtil.info(TAG, "=========================================setHint");
+//        Text text = (Text) findComponentById(ResourceTable.Id_ttt);
+//        WordsAbility words = new WordsAbility(this);
+//        String name = words.getFirstWord();
+//        System.out.println("first word ==========================================" + name);
+//        text.setText(name);
     }
 
     private class ButtonClick implements Component.ClickedListener {

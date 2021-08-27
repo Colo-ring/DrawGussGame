@@ -11,13 +11,6 @@
         ohos:orientation="horizontal"
         ohos:alignment="center"
         ohos:weight="1"
-        ohos:background_element="red">
-        <Text
-            ohos:id="$+id:ttt"
-            ohos:height="match_content"
-            ohos:width="match_content"
-            ohos:text="$string:question">
-        </Text>
         ohos:background_element="#8FC31F">
         <Image
             ohos:height="33vp"
@@ -107,5 +100,4 @@
             ohos:background_element="$graphic:background_submitbutton"
             ohos:width="match_content"/>
     </DirectionalLayout>
-
 </DirectionalLayout>

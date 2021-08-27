@@ -117,7 +117,7 @@ public class DrawRemSlice extends AbilitySlice {
     }
 
     private void initButton() {
-        findComponentById(ResourceTable.Id_tttt).setClickedListener(new DrawRemSlice.ButtonClick());
+        //findComponentById(ResourceTable.Id_tttt).setClickedListener(new DrawRemSlice.ButtonClick());
     }
     //选词弹框
     private void chooseWordDialog(){
@@ -360,9 +360,9 @@ public class DrawRemSlice extends AbilitySlice {
         public void onClick(Component component) {
             int btnId = component.getId();
             switch (btnId) {
-                case ResourceTable.Id_tttt:
-                    pointStyle.setRed();
-                    break;
+//                case ResourceTable.Id_tttt:
+//                    pointStyle.setRed();
+//                    break;
                 case ResourceTable.Id_start:
                     break;
                 default:
