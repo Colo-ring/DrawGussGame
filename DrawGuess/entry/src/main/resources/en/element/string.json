@@ -30,7 +30,7 @@
     },
     {
       "name": "cannotspeak",
-      "value": "绘图中不能发言"
+      "value": "绘画中，请保持安静！"
     },
     {
       "name": "entry_MainAbility",
@@ -38,15 +38,23 @@
     },
     {
       "name": "mainability_description",
-      "value": "Java_Empty Ability"
+      "value": "分布式你画我猜"
     },
     {
       "name": "mainability_HelloWorld",
-      "value": "Hello World"
+      "value": "分布式你画我猜"
     },
     {
       "name": "drawerserviceability_description",
-      "value": "hap sample empty service"
+      "value": "分布式你画我猜"
+    },
+    {
+      "name": "worddataability_description",
+      "value": "分布式你画我猜"
+    },
+    {
+      "name": "wordsability_description",
+      "value": "分布式你画我猜"
     }
   ]
 }

@@ -103,6 +103,7 @@ public class MainAbilitySlice extends AbilitySlice {
                 DeviceManager.getDeviceList(DeviceInfo.FLAG_GET_ONLINE_DEVICE);
         LogUtil.info(TAG, "DrawerAbilitySlice deviceInfos size is :" + deviceInfos.size());
         devices.addAll(deviceInfos);
+        CommonData.devices_list = devices;
         showDevicesDialog();
     }
 

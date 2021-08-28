@@ -70,6 +70,12 @@
         "icon": "$media:icon",
         "description": "$string:wordsability_description",
         "type": "service"
+      },
+      {
+        "icon": "$media:icon",
+        "name": "com.example.drawguess.DrawerAbility",
+        "description": "",
+        "type": "page"
       }
     ],
     "reqPermissions": [

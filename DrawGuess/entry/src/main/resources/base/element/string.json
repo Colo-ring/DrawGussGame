@@ -38,23 +38,23 @@
     },
     {
       "name": "mainability_description",
-      "value": "Java_Empty Ability"
+      "value": "分布式你画我猜"
     },
     {
       "name": "mainability_HelloWorld",
-      "value": "Hello World"
+      "value": "分布式你画我猜"
     },
     {
       "name": "drawerserviceability_description",
-      "value": "hap sample empty service"
+      "value": "分布式你画我猜"
     },
     {
       "name": "worddataability_description",
-      "value": "hap sample empty provider"
+      "value": "分布式你画我猜"
     },
     {
       "name": "wordsability_description",
-      "value": "hap sample empty service"
+      "value": "分布式你画我猜"
     }
   ]
 }

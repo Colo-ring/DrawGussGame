@@ -41,11 +41,19 @@ import ohos.agp.window.dialog.CommonDialog;
 
 import ohos.app.Context;
 import ohos.bundle.ElementName;
+import ohos.data.distributed.common.KvManagerConfig;
+import ohos.data.distributed.common.KvManagerFactory;
+import ohos.distributedschedule.interwork.DeviceInfo;
+import ohos.distributedschedule.interwork.DeviceManager;
 import ohos.event.commonevent.*;
 import ohos.rpc.*;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_PARENT;
 
@@ -90,7 +98,8 @@ public class DrawRemSlice extends AbilitySlice {
     private String buttonText2;
     private String buttonText3;
     private String buttonText4;
-
+    private PointStyles pointStyle = new PointStyles();
+     private static int drawerTime = 100;
     private String hintText1;
     private String hintText2;
     private String hintText3;
@@ -100,6 +109,11 @@ public class DrawRemSlice extends AbilitySlice {
     WordsAbility words;
 
     RealWord realWord;
+    Text time_drawer;
+
+    ProgressBar progressBar_drawer;
+
+    private List<DeviceInfo> devices;
     @Override
     public void onStart(Intent intent) {
         LogUtil.info(TAG, "DrawRemSlice::onStart");
@@ -112,6 +126,7 @@ public class DrawRemSlice extends AbilitySlice {
         chooseWordDialog();
         initDraw();
         subscribe();
+        //StartGameTime();
     }
 
     /**
@@ -408,5 +423,91 @@ public class DrawRemSlice extends AbilitySlice {
                     break;
             }
         }
+    }
+    private void StartGameTime() {
+        LogUtil.info(TAG, " GuesserAbilitySlice::StartGameTime: ");
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                drawerTime--;
+                LogUtil.info(TAG, " drawerTime-1: " + drawerTime);
+                context.getMainTaskDispatcher().asyncDispatch(() -> {
+                    //initTime();
+                    progressBar_drawer.setProgressValue(drawerTime);
+                });
+                LogUtil.info(TAG, " setProgressValue  success ");
+                if(drawerTime <= 0) {
+                    LogUtil.info(TAG, " Game Over ");
+                    startNewGames(); // 时间到了
+                    cancel(); // 停止计时器
+                    System.gc(); // 结束线程
+                }
+            }
+        }, 0, 1000);
+    }
+
+//    private void initTime(){
+//        LogUtil.info(TAG, " DrawerAbilitySlice::initTime ："+ drawerTime );
+//        Component textLayout = LayoutScatter.getInstance(context).parse(ResourceTable.Layout_drawer_page, null, false);
+//        LogUtil.info(TAG,"准备判断");
+//        LogUtil.info(TAG,  "判断："+(textLayout.findComponentById(ResourceTable.Id_time_drawer) instanceof Text));
+//        if (textLayout.findComponentById(ResourceTable.Id_time_drawer) instanceof Text) {
+//            LogUtil.info(TAG,"if已进入");
+//            LogUtil.info(TAG, " DrawerAbilitySlice::initTime2 ："+ drawerTime );
+//            time_drawer = (Text) textLayout.findComponentById(ResourceTable.Id_time_drawer);
+//            LogUtil.info(TAG, " DrawerAbilitySlice::initTime3 ："+ drawerTime );
+//            time_drawer.setText(String.valueOf(drawerTime));
+//            LogUtil.info(TAG, " DrawerAbilitySlice::initTime4 ："+ drawerTime );
+//        }
+//    }
+
+    public void startNewGames(){
+        LogUtil.info(TAG, " DrawerAbilitySlice::DoSomething ：" );
+        LogUtil.info(TAG, "DrawerAbilitySlice CommonData.devices_list get:" + CommonData.devices_list);
+        devices = new ArrayList<>();
+//        ArrayList arrayList = new ArrayList<>();
+//        LogUtil.info(TAG, "DrawerAbilitySlice devices_list getsize+++++++++++++++++++++:" + CommonData.devices_list.size());
+//        devices.addAll(CommonData.devices_list);
+//
+//        LogUtil.info(TAG, "DrawerAbilitySlice devices getsize+++++++++++++++++++++:" + devices.size());
+        List<DeviceInfo> deviceInfos =
+                DeviceManager.getDeviceList(DeviceInfo.FLAG_GET_ONLINE_DEVICE);
+        devices.addAll(deviceInfos);
+//        //这里可能需要加个标识符，加if
+        startRemoteFa(devices.get(0).getDeviceId());
+        startLocalFa(devices.get(1).getDeviceId());//本地跳转的问题出在这
+    }
+
+    private void startLocalFa(String deviceId) {
+        LogUtil.info(TAG, "DrawerAbilitySlice::startLocalFa：......");
+        Intent intent = new Intent();
+        intent.setParam(CommonData.KEY_REMOTE_DEVICEID, deviceId);
+        intent.setParam(CommonData.KEY_IS_LOCAL, true);
+        Operation operation = new Intent.OperationBuilder()
+                .withBundleName(getBundleName())
+                .withAbilityName(CommonData.ABILITY_DRAWER)
+                .withAction(CommonData.DRAW_PAGE)
+                .build();
+        intent.setOperation(operation);
+        startAbility(intent);
+        LogUtil.info(TAG, "DrawerAbilitySlice::startLocalFa::startAbility......");
+    }
+    //本地跳转的问题出在这
+    private void startRemoteFa(String deviceId) {
+        LogUtil.info(TAG, "DrawerAbilitySlice::startRemoteFa：......");
+        String localDeviceId =
+                KvManagerFactory.getInstance().createKvManager(new KvManagerConfig(this)).getLocalDeviceInfo().getId();
+        Intent intent = new Intent();
+        intent.setParam(CommonData.KEY_REMOTE_DEVICEID, localDeviceId);
+        intent.setParam(CommonData.KEY_IS_LOCAL, false);
+        Operation operation = new Intent.OperationBuilder().withDeviceId(deviceId)
+                .withBundleName(getBundleName())
+                .withAbilityName(CommonData.ABILITY_DRAWER)//测试：原本ABILITY_DRAWER，测试改为ABILITY_GUESSER
+                .withAction(CommonData.GUESS_PAGE)
+                .withFlags(Intent.FLAG_ABILITYSLICE_MULTI_DEVICE)//等会测试删除这行,测试结果：删除了也不行
+                .build();
+        intent.setOperation(operation);
+        startAbility(intent);
+        LogUtil.info(TAG, "DrawerAbilitySlice::startRemoteFa::startAbility......");
     }
 }

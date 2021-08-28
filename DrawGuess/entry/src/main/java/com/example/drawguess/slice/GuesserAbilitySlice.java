@@ -33,10 +33,14 @@ import ohos.agp.window.dialog.CommonDialog;
 import ohos.agp.window.dialog.ToastDialog;
 import ohos.app.Context;
 import ohos.bundle.ElementName;
+import ohos.distributedschedule.interwork.DeviceInfo;
 import ohos.event.commonevent.*;
 import ohos.rpc.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static ohos.agp.components.ComponentContainer.LayoutConfig.MATCH_PARENT;
 
@@ -77,6 +81,13 @@ public class GuesserAbilitySlice extends AbilitySlice {
     String realAnswer;
 
     RealWord realWord;
+    private static int guesserTime = 100;
+
+    Text time_guesser;
+
+    ProgressBar progressBar_guesser;
+
+    private List<DeviceInfo> devices = new ArrayList<>();
 
     @Override
     public void onStart(Intent intent) {
@@ -90,6 +101,8 @@ public class GuesserAbilitySlice extends AbilitySlice {
         realWord = RealWord.getSingleton();
         answerText = (TextField)findComponentById(ResourceTable.Id_answer);
         //setHint();
+        progressBar_guesser = (ProgressBar) findComponentById(ResourceTable.Id_progressbar_guesser);
+        StartGameTime();
     }
 
     private void initButton() {
@@ -312,12 +325,40 @@ public class GuesserAbilitySlice extends AbilitySlice {
             }
         }
     }
+    public void StartGameTime() {
+        LogUtil.info(TAG, " GuesserAbilitySlice::StartGameTime: ");
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                guesserTime--;
+                LogUtil.info(TAG, " drawerTime-1: "+guesserTime);
+                context.getMainTaskDispatcher().asyncDispatch(() -> {
+                    //initTime();
+                    progressBar_guesser.setProgressValue(guesserTime);
+                });
+                LogUtil.info(TAG, " setProgressValue  success ");
+                if(guesserTime <= 0) {
+                    LogUtil.info(TAG, " Game Over ");
+                    //startNewGames(); 在drawer页面调用，这边不需要
+                    cancel(); // 停止计时器
+                    System.gc(); // 结束线程
+                }
+            }
+        }, 0, 1000);
+    }
+
+//     private void initTime(){
+//        LogUtil.info(TAG, " GuesserAbilitySlice::initTime ："+ guesserTime );
+//        Component textLayout = LayoutScatter.getInstance(context).parse(ResourceTable.Layout_guesser_page, null, false);
+//        if (textLayout.findComponentById(ResourceTable.Id_time_guesser) instanceof Text) {
+//            time_guesser = (Text) textLayout.findComponentById(ResourceTable.Id_time_drawer);
+//            time_guesser.setText(String.valueOf(guesserTime));
+//        }
+//    }
 
     @Override
     public void onActive() {
-        super.onActive();
-        setHint();
-    }
+        super.onActive();}
 
     @Override
     public void onForeground(Intent intent) {

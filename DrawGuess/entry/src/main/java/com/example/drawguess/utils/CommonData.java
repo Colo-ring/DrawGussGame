@@ -15,8 +15,14 @@
 
 package com.example.drawguess.utils;
 
+import com.example.drawguess.DrawerAbility;
 import com.example.drawguess.DrawerServiceAbility;
+import com.example.drawguess.GuesserAbility;
 import com.example.drawguess.MainAbility;
+import ohos.distributedschedule.interwork.DeviceInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CommonData Util
@@ -24,10 +30,16 @@ import com.example.drawguess.MainAbility;
  * @since 2021-01-11
  */
 public class CommonData {
+
+    public static List<DeviceInfo> devices_list = new ArrayList<>();
     /**
      * MainAbility name
      */
     public static final String ABILITY_MAIN = MainAbility.class.getName();
+
+    public static final String ABILITY_GUESSER = GuesserAbility.class.getName();
+
+    public static final String ABILITY_DRAWER = DrawerAbility.class.getName();
 
     /**
      * DrawerService name

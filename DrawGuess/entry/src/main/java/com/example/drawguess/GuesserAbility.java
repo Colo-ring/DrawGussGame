@@ -1,5 +1,6 @@
 package com.example.drawguess;
 
+import com.example.drawguess.slice.DrawRemSlice;
 import com.example.drawguess.slice.GuesserAbilitySlice;
 import com.example.drawguess.slice.MainAbilitySlice;
 import com.example.drawguess.utils.CommonData;
@@ -15,6 +16,8 @@ public class GuesserAbility extends Ability {
         LogUtil.info(TAG, "GuesserAbility::onStart");
         super.onStart(intent);
         super.setMainRoute(GuesserAbilitySlice.class.getName());
+        addActionRoute(CommonData.DRAW_PAGE, DrawRemSlice.class.getName());
+        addActionRoute(CommonData.GUESS_PAGE, GuesserAbilitySlice.class.getName());
     }
 
     @Override
