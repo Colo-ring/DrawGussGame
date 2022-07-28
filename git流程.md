@@ -9,7 +9,7 @@
 
 1. 本地新建文件夹，cd进入
 
-2. git clone git@gitee.com:colo_ring/one-million.git -b dev
+2. git clone git@github.com:Colo-ring/DrawGussGame.git -b dev
 
 3. git branch -v 检查本地分支
 
